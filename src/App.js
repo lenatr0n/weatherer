@@ -6,7 +6,10 @@ import SearchIcon from '@material-ui/icons/Search';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import moment from 'moment'
 import { Bar } from 'react-chartjs-2'
-
+import { Input } from 'semantic-ui-react'
+import { makeStyles } from '@material-ui/core/styles';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Spinner from 'react-bootstrap/Spinner'
 class App extends React.Component {
 
   state = {
@@ -23,7 +26,7 @@ class App extends React.Component {
     // here is our giphy api key
     var key = 'c0ce51e4fea78661e9e478214f0336d3'
     // this line make a URL string, I got this from their documentation
-    var url = `http://api.openweathermap.org/data/2.5/forecast?q=${this.state.text}&units=imperial&APPID=${key}`
+    var url = `https://api.openweathermap.org/data/2.5/forecast?q=${this.state.text}&units=imperial&APPID=${key}`
     // "fetch" calls the giphy API!
     var r = await fetch(url)
     // this lines extracts JSON (javascript object notation)
@@ -68,21 +71,21 @@ class App extends React.Component {
         <form className="App-header" onSubmit={this.getWeather}>
           <TextField value={text}
             autoFocus
-            variant="outlined"
-            label="Search for weather"
+            label="Search for Weather"
+            id="mui-theme-provider-standard-input"
             onChange={e => this.setState({ text: e.target.value })}
             style={{ width: '100%', marginLeft: 8 }}
           />
-          <Button variant="contained"
+          <Button 
             color="primary"
             disabled={loading || !text}
             type="submit"
-            style={{ width: 150, margin: '0 10px', height: 75 }}>
+            style={{ width: 100, margin: '0 10px', height: 60 }}>
             <SearchIcon style={{ marginRight: 8 }} />
-            Search
           </Button>
+          
         </form>
-        {loading && <LinearProgress />}
+        {loading && <CircularProgress />}
         <main>
           {data && <Bar
             data={data}
